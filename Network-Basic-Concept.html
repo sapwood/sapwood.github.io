@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Network Basic Concept</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="IP Routing" />
+<meta name="tags" content="Encapsulation" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Network Basic Concept</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-02-20 11:20:00-07:00">Feb 20, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/ip-routing.html"><em>#IP Routing</em></a>
+                    <a href="./tag/encapsulation.html"><em>#Encapsulation</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>Same-layer and Adjcent-layer Interaction</h2>
+<ul>
+<li>Same-layer interaction refers to the communications between the same TCP/IP layer in different devices. Such as a computer transits a Layer 3 packet to another computer, the receiving computer will handle the data at the same layer.</li>
+<li>Adjcent-layer interaction refers to the communications between upper and lower layers. For example, the upper layer requires the lower layer provide additional functions.</li>
+</ul>
+<h2>Basic Understanding of IP Routing</h2>
+<p>IP routing is similar to a postal service. The devices in the TCP/IP network shoud have a IP address to be identified. When a device wants to transit the data to another, it has to specify the source and destination IP addresses, then the data will be sent to the router interface within the same local network, just as you would delever a letter to the nearest post office. </p>
+<p>Once the router received the data, it will determine the best path to transfer the data to the other network closet to the destination through the routing table. This process will be repeated until the data reaches the final destination.</p>
+<h2>Encapsulation</h2>
+<p>When the data is ready to be sent to another device, it must be converted into an electric signal and transmitted over the media. During the process, headers and tailers are added to the data depending on different protocols used in the 5-7 layers,  it's called encapsulation. </p>
+<ul>
+<li>At the application layer, a layer 7 protocal header, such as HTTP header is added to the data. </li>
+<li>At the transport layer, the most common protocols used are TCP/UDP, the headers are added before the data from the application layer. </li>
+<li>At network layer, the data from upper layer which is called segment is added a protocol header typically an IP header. </li>
+<li>At data link layer, both Ethernet header and tailer are added in front of the data that coming from the network layer which is called packet. </li>
+<li>The data encapsulated into the Layer 2 protocol is called a frame. </li>
+<li>The data along with the headers at any layer is called a PDU(protocol Data Unit).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Encapsulation</th>
+<th>PDU</th>
+<th>Layer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP Header+ [Data]</td>
+<td></td>
+<td>Application</td>
+</tr>
+<tr>
+<td>TCP/UDP Header + [Upper data]</td>
+<td>Segment</td>
+<td>Transport</td>
+</tr>
+<tr>
+<td>IP Header + [Segment]</td>
+<td>Packet</td>
+<td>Network</td>
+</tr>
+<tr>
+<td>Ethernet Header + [Packet] + Tailer</td>
+<td>Frame</td>
+<td>Data Link</td>
+</tr>
+</tbody>
+</table>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./mac-and-ip-address.html">MAC Address and IP Address </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
