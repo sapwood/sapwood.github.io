@@ -4,14 +4,15 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Brian's Blog - My first post</title>
+        <title>Brian's Blog - OSI and TCP/IP layers</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
         <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
 
-<meta name="tags" content="blog" />
-<meta name="tags" content="tutorial" />
+<meta name="tags" content="Network" />
+<meta name="tags" content="TCP/IP" />
+<meta name="tags" content="OSI Layers" />
 </head>
 <body>
 <style>.github-corner:hover .octo-arm {
@@ -46,53 +47,91 @@
     </header>
     <nav>
         <ul>
-                    <li><a href="./category/network.html"> Network </a></li>
-                    <li><a                         class="active" href="./category/other.html"> Other </a></li>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
                     <li><a href="./pages/about.html">About me</a>
                     </li>
         </ul>
     </nav>
 <main>
     <article>
-        <h1>My first post</h1>
+        <h1>OSI and TCP/IP layers</h1>
         
         <aside>
             <ul>
                 <li>
-                    <time datetime="2023-02-18 10:20:00-07:00">Feb 18, 2023</time>
+                    <time datetime="2023-02-19 16:20:00-07:00">Feb 19, 2023</time>
                 </li>
                 <li>1 min read</li>
                 <li>
                     Categories:
-                    <a href="./category/other.html"><em>Other</em></a>
+                    <a href="./category/network.html"><em>Network</em></a>
                 </li>
                 <li>
                     Tags:
-                    <a href="./tag/blog.html"><em>#blog</em></a>
-                    <a href="./tag/tutorial.html"><em>#tutorial</em></a>
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/tcpip.html"><em>#TCP/IP</em></a>
+                    <a href="./tag/osi-layers.html"><em>#OSI Layers</em></a>
                 </li>
             </ul>
         </aside>
-        <p>This is some super awesome content within my post.</p>
-<h2>Let me check the second title</h2>
-<p><em>this is italic font test</em></p>
-<p><strong>and the blod font test</strong></p>
-<blockquote>
-<p>Quote here to see the effect</p>
-</blockquote>
+        <p>The OSI model defines seven layers, from top to bottom: </p>
 <ul>
-<li>List 1</li>
-<li>list 2</li>
+<li><strong>Application</strong></li>
+<li><strong>Presentation</strong></li>
+<li><strong>Session</strong></li>
+<li><strong>Transport</strong></li>
+<li><strong>Network</strong></li>
+<li><strong>Data Link</strong></li>
+<li><strong>Physical</strong></li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
-    <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;This is the code test %</span><span class="si">{</span><span class="n">variables</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</code></pre></div>
+<p>In contrast, the TCP/IP model simplifies this to four layers, from top to bottom:</p>
+<ul>
+<li><strong>Application</strong></li>
+<li><strong>Internet</strong></li>
+<li><strong>Transport</strong></li>
+<li><strong>Network Access</strong></li>
+</ul>
+<p>Specifically, the top three layers of the OSI model are consolidated into the Application Layer in TCP/IP, while the Transport layer remains the same. 
+The Network layer is renamed to the Internet layer, and the last two layers of the OSI model are combined into the Network Access layer in TCP/IP.</p>
+<table cellspacing="0">
+    <thead>
+    <tr>
+        <th><strong>OSI MODEL</strong></th>
+        <th><strong>TCP/IP MODEL</strong></th>
+    </tr>       
+    </thead>
+    <tbody>
+        <tr>
+            <td>Application</td>
+            <td rowspan="3">Application</td>
+        </tr>
+        <tr>
+            <td>Presentation</td>
+        </tr>
+        <tr>
+            <td>Session</td>
+        </tr>
+        <tr>
+            <td>Transport</td>
+            <td>Transport</td>
+        </tr>
+        <tr>
+            <td>Network</td>
+            <td>Internet</td>
+        </tr>
+        <tr>
+            <td>Data Link</td>
+            <td rowspan="2">Network Access</td>
+        </tr>
+        <tr>
+            <td>Physical</td>
+        </tr>
+    </tbody>
+</table>
     </article>
     <section class="post-nav">
         <div id="left-page">
             <div id="left-link">
-                <div id="left-arrow"><i class="fa fa-chevron-circle-left"></i></div>
-                <a href="./OSI-TCP-IP-LAYERS.html"> OSI and TCP/IP layers</a>
             </div>
         </div>
         <div id="right-page">

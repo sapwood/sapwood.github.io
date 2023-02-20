@@ -395,11 +395,31 @@ figure.float-right figcaption {
 
 table {
   width: 100%;
+  text-align: center;
+  border:0.5px solid #888;
+
 }
 
-table thead {
-  background-color: #cecece;
+table td,th{
+  padding: 1em 0;
+  border: 0.5px solid #888;
+
 }
+
+
+
+/*table tr:nth-child(odd){
+  background-color: #ccc;
+
+}*/
+
+table thead tr{
+  background-color: #000!important;
+  color:#fff;
+}
+
+
+
 
 blockquote {
   margin: 1em;
