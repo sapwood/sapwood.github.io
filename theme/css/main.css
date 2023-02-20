@@ -423,11 +423,11 @@ table thead tr{
 
 blockquote {
   margin: 1em;
-  border-left: solid 0.1em #cecece;
+  border-left: solid 0.5em #cecece;
   padding: 0.5em 2em;
-  position: relative;
+/*  position: relative;*/
   background-color: #efefef;
-  box-shadow: 0 -1px 0 #bbbbbb inset;
+/*  box-shadow: 0 -1px 0 #bbbbbb inset;*/
 }
 
 blockquote::before {

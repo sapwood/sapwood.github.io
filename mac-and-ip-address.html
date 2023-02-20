@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - MAC Address and IP Address</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="MAC" />
+<meta name="tags" content="IP address" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>MAC Address and IP Address</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-02-19 21:20:00-07:00">Feb 19, 2023</time>
+                </li>
+                <li>3 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/mac.html"><em>#MAC</em></a>
+                    <a href="./tag/ip-address.html"><em>#IP address</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>MAC Address</h2>
+<p>MAC address is 6 bytes (48 bits) long and represented by 12 hexadecimal digits. The first 3 bytes are assigned to the NIC manufacturer by IEEE which is globally unique and is known as the OUI (Organizationally unique identifier). The last 3 bytes are assigned to the device by the vendors, which results in each device having a unique identifier.</p>
+<p>But if you issue this command to show the MAC address of your PC or switch/router.</p>
+<blockquote>
+<p>PC</p>
+</blockquote>
+<pre>
+    <code class="language-powershell">
+        ipconfig /all
+    </code>
+</pre>
+
+<blockquote>
+<p>Switch / Router</p>
+</blockquote>
+<pre>
+    <code class="language-batch">
+        show interface gigabitEthernet 0/0/0
+    </code>
+</pre>
+
+<p>There may be an address called BIA (Burned-In Address) following the MAC address, which is identical to the MAC address. </p>
+<h3>what is the difference between MAC and BIA address?</h3>
+<p>By default the MAC and BIA address are identical. But MAC address can be motified by the software while BIA is permanent.</p>
+<p>MAC address is only significant in local network, as it's based on the layer 2(Data Link) of the OSI model.If a device wants to transit the messages to another one in the same local network, both of source and destination MAC address are required. However if the message is going to be transited to a remote network, the IP addresses become essential.</p>
+<h4>Spcial MAC addresses</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Address</th>
+<th>Protocal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broadcast</td>
+<td>ffff.ffff.ffff</td>
+<td>MAC</td>
+</tr>
+<tr>
+<td>Broadcast</td>
+<td>255.255.255.255</td>
+<td>IPv4</td>
+</tr>
+<tr>
+<td>Multicast</td>
+<td>Start with 00-01-5E</td>
+<td>IPv4</td>
+</tr>
+<tr>
+<td>Multicast</td>
+<td>Class D</td>
+<td>Ipv4</td>
+</tr>
+<tr>
+<td>Multicast</td>
+<td>Start with 33-33</td>
+<td>IPv6</td>
+</tr>
+<tr>
+<td>Multicast</td>
+<td>ff00::/8</td>
+<td>IPv6</td>
+</tr>
+</tbody>
+</table>
+<h2>IP Address</h2>
+<p>There are two common versions of IP addresses</p>
+<ul>
+<li>IPv4 address</li>
+<li>IPv6 address</li>
+</ul>
+<p>IPv4 address is 4 bytes (32 bits) in length and is represented by 12 decimal digits separated by . (period), with every 8 bits forming a block. Each of these block is called octet which ranges from 0 to 255.</p>
+<p>IPv4 is classful addresses.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Range</th>
+<th>Feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1.0.0.0 ~ 126.0.0.0</td>
+<td>---------</td>
+</tr>
+<tr>
+<td>B</td>
+<td>128.0.0.0 ~ 191.255.0.0</td>
+<td>---------</td>
+</tr>
+<tr>
+<td>C</td>
+<td>192.0.0.0 ~ 223.255.255.0</td>
+<td>---------</td>
+</tr>
+<tr>
+<td>D</td>
+<td>224.0.0.0 ~ 239.255.255.255</td>
+<td>Multicast</td>
+</tr>
+<tr>
+<td>E</td>
+<td>240.0.0.0 ~ 255.255.255.255</td>
+<td>Experiments</td>
+</tr>
+</tbody>
+</table>
+<h4>Special IPv4 address</h4>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>127.0.0.0/8</td>
+<td>Loop back address</td>
+</tr>
+<tr>
+<td>169.254.0.0/16</td>
+<td>Link-local address that is assigned by OS</td>
+</tr>
+<tr>
+<td>255.255.255.255</td>
+<td>Broadcast</td>
+</tr>
+</tbody>
+</table>
+<h3>IPv6 address</h3>
+<p>IPv6 address is 16 bytes (128 bits) in length and is represented by 32 hexadecimal digits seperated by : (colon), with every 4 hexadecimal digits forming a block.</p>
+<p>When a message is transmitted over a network, it is first sent to the default gateway, which is typically a router. The router then uses its routing table to determine the best path to send the message to its intended destination. This allows the message to be delivered efficiently and quickly to the recipient.</p>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./OSI-TCP-IP-LAYERS.html">OSI and TCP/IP layers </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
