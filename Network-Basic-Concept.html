@@ -87,12 +87,12 @@
 <p>IP routing is similar to a postal service. The devices in the TCP/IP network shoud have a IP address to be identified. When a device wants to transit the data to another, it has to specify the source and destination IP addresses, then the data will be sent to the router interface within the same local network, just as you would delever a letter to the nearest post office. </p>
 <p>Once the router received the data, it will determine the best path to transfer the data to the other network closet to the destination through the routing table. This process will be repeated until the data reaches the final destination.</p>
 <h2>Encapsulation</h2>
-<p>When the data is ready to be sent to another device, it must be converted into an electric signal and transmitted over the media. During the process, headers and tailers are added to the data depending on different protocols used in the 5-7 layers,  it's called encapsulation. </p>
+<p>When the data is ready to be sent to another device, it must be converted into an electric signal and transmitted over the media. During the process, headers and trailers are added to the data depending on different protocols used in the 5-7 layers,  it's called encapsulation. </p>
 <ul>
 <li>At the application layer, a layer 7 protocal header, such as HTTP header is added to the data. </li>
 <li>At the transport layer, the most common protocols used are TCP/UDP, the headers are added before the data from the application layer. </li>
 <li>At network layer, the data from upper layer which is called segment is added a protocol header typically an IP header. </li>
-<li>At data link layer, both Ethernet header and tailer are added in front of the data that coming from the network layer which is called packet. </li>
+<li>At data link layer, both Ethernet header and trailer are added in front of the data that coming from the network layer which is called packet. </li>
 <li>The data encapsulated into the Layer 2 protocol is called a frame. </li>
 <li>The data along with the headers at any layer is called a PDU(protocol Data Unit).</li>
 </ul>
@@ -121,7 +121,7 @@
 <td>Network</td>
 </tr>
 <tr>
-<td>Ethernet Header + [Packet] + Tailer</td>
+<td>Ethernet Header + [Packet] + Trailer</td>
 <td>Frame</td>
 <td>Data Link</td>
 </tr>
