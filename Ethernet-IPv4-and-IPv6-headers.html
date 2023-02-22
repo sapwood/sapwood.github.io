@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Ethernet, IPv4 and IPv6 headers</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Ethernet" />
+<meta name="tags" content="IPv4" />
+<meta name="tags" content="IPv6" />
+<meta name="tags" content="Headers" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Ethernet, IPv4 and IPv6 headers</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-02-21 18:20:00-07:00">Feb 21, 2023</time>
+                </li>
+                <li>3 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/ethernet.html"><em>#Ethernet</em></a>
+                    <a href="./tag/ipv4.html"><em>#IPv4</em></a>
+                    <a href="./tag/ipv6.html"><em>#IPv6</em></a>
+                    <a href="./tag/headers.html"><em>#Headers</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>Ethernet Frame Headers and Trailer</h2>
+<table>
+<thead>
+<tr>
+<th>8 Bytes</th>
+<th>6 Bytes</th>
+<th>6 Bytes</th>
+<th>2 Bytes</th>
+<th>46-1500 Bytes</th>
+<th>4 Bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Preamble and SFD</td>
+<td>Destination MAC</td>
+<td>Source MAC</td>
+<td>Type/Length</td>
+<td>Data</td>
+<td>FCS</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Preamble is a 7 bytes long sequence consisting of alternating 1s and 0s that indicates the start of the frame. The start frame delimiter (SFD) is a 1 byte long sequence that signals the end of the preamble and the start of the frame data. It is represented by the 10101011 pattern</li>
+<li>Destination MAC address</li>
+<li>Source MAC address</li>
+<li>Type/Length: The value in this field implies the protocol from the upper layer, which is represented in hexadecimal digits.<ul>
+<li>0x0800 IPv4</li>
+<li>0x86DD IPv6</li>
+<li>0x0806 ARP</li>
+</ul>
+</li>
+<li>Data</li>
+<li>FCS (Frame Check Sequence) This field is used for error detection. Its value is calculated using a mathematical algorithm called Cyclic Redundancy Check (CRC) based on the data in the frame. When the receiving device receives the frame, it performs the same calculation on the data and compares the resulting value with the FCS value in the frame. If the two values match, the data is deemed accurate. Otherwise, the frame is discarded.</li>
+</ol>
+<h2>IPv4 packet header</h2>
+<table>
+<thead>
+<tr>
+<th>4 Bits</th>
+<th>4 Bits</th>
+<th>8 Bits</th>
+<th>16 Bits</th>
+<th>16 Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Version</td>
+<td>IHL</td>
+<td>DS</td>
+<td>Total Length</td>
+<td>-Identification</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>3 Bits</th>
+<th>13 Bits</th>
+<th>8 Bits</th>
+<th>8 Bits</th>
+<th>16 Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flag</td>
+<td>--Fragment Offset--</td>
+<td>--TTL--</td>
+<td>Protocol</td>
+<td>Header Checksum</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>32 Bits</th>
+<th>32 Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source IP Address</td>
+<td>Detination IP Address</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Version: Indecate the version of IP packet.<ul>
+<li>0100 IPv4</li>
+<li>0110 IPv6</li>
+</ul>
+</li>
+<li>IHL (Internet Header Length): The value in this filed ranges from 5 to 15, but it has to be mutiplied by 4 to determine the length in bytes, therefore the length in byets rangs from 20 bytes to 60 bytes.</li>
+<li>DS (Differenticated Service): It was formerly called Type of Service (Tos) and consists of two parts which are DSCP (Differentiated Service Code Point) and ECN (Explicit Congestion Notafication).<ul>
+<li>DSCP is 6 bits long, it indicates the priority of the packet. The bigger the value is, the higher the priority it has.</li>
+<li>ECN  is 2 bits long, it has 3 kinds of values. The router could detect the congestion of the network and set the value to notify the receiver to adjust the rate of transmition or avoid more traffic due to the congestion of the netwrok.<ul>
+<li>00-NOT-ECT (Not ECN Capable Transport)</li>
+<li>01-ECT (ECN Capable Transport)</li>
+<li>10-CE (Congestion Experienced)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Total Length. <ul>
+<li>Minimum Length is 20 bytes (Header without data)</li>
+<li>Maximum Length is 65535 (2^16)</li>
+</ul>
+</li>
+<li>Identification: Uniquely identify the group of fragment of a sigle ip datagram.</li>
+<li>Flag<ul>
+<li>First bit 0 reserved</li>
+<li>Second bit DF (Don't fragment) denotes this is the last fragment, no more fragment is needed.</li>
+<li>Last bit MF (More fragment) denotes there are more fragments will be transmitted. </li>
+</ul>
+</li>
+<li>Fragment Offset: The value in this field indicates the position that in relation to the first fragment. Since fragments can be transmitted out of order, the destination device may need to reassemble them in the correct order once it receives all the fragments.</li>
+<li>TTL (Time to Live):  In order to prevent packets from being forwarded indefinitely, every packet has a lifespan designated by a TTL value. The value is reduced by 1 each time the packet arrives at a router, and the router will discard the packet when the value reaches 0. This helps ensure that packets do not circulate endlessly in the network.</li>
+<li>Protocol: Upper layer protocols.<ul>
+<li>ICMP(1)</li>
+<li>TCP(6)</li>
+<li>UDP(17)</li>
+</ul>
+</li>
+<li>Header Checksum: Error check by the router.</li>
+</ol>
+<h3>IPv6 Header</h3>
+<p>The length of IPv6 header is fixed 40 bytes.</p>
+<table>
+<thead>
+<tr>
+<th>4 Bits</th>
+<th>8 Bits</th>
+<th>20 Bits</th>
+<th>16 Bits</th>
+<th>8 Bits</th>
+<th>8 Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Version</td>
+<td>Traffic Class</td>
+<td>Flow Label</td>
+<td>Payload Length</td>
+<td>Next Header</td>
+<td>Hop Limit</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>128 Bits 16 Bytes</th>
+<th>128 Bits 16 Bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source IP Address</td>
+<td>Destination IP Address</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Version <ul>
+<li>0110 IPv6</li>
+</ul>
+</li>
+<li>Traffic Class: Same as the DS in IPv4</li>
+<li>Flow Label: Same as Identification in IPv4</li>
+<li>Payload Length: Total length of data without header</li>
+<li>Next Header: The protocol on the upper layer</li>
+<li>Hop Limit: Same as the TTL in IPv4</li>
+</ol>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./Network-Basic-Concept.html">Network Basic Concept </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
