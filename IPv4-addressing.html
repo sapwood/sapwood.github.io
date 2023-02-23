@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - IPv4 Addressing</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="IPv4" />
+<meta name="tags" content="Adressing" />
+<meta name="tags" content="cisco" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>IPv4 Addressing</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-02-23 11:20:00-07:00">Feb 23, 2023</time>
+                </li>
+                <li>3 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/ipv4.html"><em>#IPv4</em></a>
+                    <a href="./tag/adressing.html"><em>#Adressing</em></a>
+                    <a href="./tag/cisco.html"><em>#cisco</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>Network Address</h2>
+<p>A host determine its network address by performing AND operation between IPv4 address and subnet mask. 
+- The first address is the network address and the last address is the broadcast address.
+- The source device can determine if the detination device belongs to romote network so that it choose to send the data to the local device directly or to the default gateway for forwarding to another network.</p>
+<h2>Type of addressing</h2>
+<h3>Unicast</h3>
+<p>Send data to a single address.</p>
+<h3>Broadcast</h3>
+<ul>
+<li>Directed Broadcast<ul>
+<li>Send data to all devices of a specific network or subnet.</li>
+<li>Broadcast address is the last address of the network.</li>
+<li>Send data to another network is allowed by configuring the router</li>
+</ul>
+</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+        router(config-if)#ip directed-boradcast
+
+    </code>
+</pre>
+
+<p><em>By default, IP directed broadcast is disabled by the device due to the security concern</em></p>
+<ul>
+<li>Limited Broadcast<ul>
+<li>Send data to all devices on a local network</li>
+<li>Address is always 255.255.255.255</li>
+<li>Router will not forward the message
+<em>IPv6 has no broadcast address</em> </li>
+</ul>
+</li>
+</ul>
+<h3>Multicast</h3>
+<p>It reduces the traffic compared to Broadcast by sending data to a set of hosts that subscribe to a multicast group.</p>
+<ul>
+<li>Class D address is reserved for the multicast<ul>
+<li>224.0.0.0 ~ 239.255.255.255</li>
+</ul>
+</li>
+</ul>
+<h3>NAT (Network Address Translation)</h3>
+<p>Due to the depletion of IPv4 addresses, many organizations use private IP addresses within their network. These addresses do not need to be unique globally, and they share a public IP address. However, in order to locate devices within the private network, Network Address Translation (NAT) is needed.
+NAT translates the private IP address which is not unique globally and used in the local network to the publish IP address. This is usually done by the router connects to the internal network and ISP network.</p>
+<ul>
+<li>Private IP address<ul>
+<li>10.0.0.0/8</li>
+<li>172.16.0.0/12</li>
+<li>192.168.0.0/16</li>
+</ul>
+</li>
+</ul>
+<h3>DMZ (Demilitarized Zone)</h3>
+<p>A physical or logical subnet that seperated the internal and external network. In order to pretect the organization's assets from the external threats, the DMZ created a addtional layer of security. The devices in the DMZ usaully have public address.</p>
+<h3>Broadcast Domain</h3>
+<p>Becasue the router does not propagate the broadcast and it discards the packets so each interface on the router connects to a broadcast domain.</p>
+<p><em>Both IPv4 and IPv6 address are managed by IANA (Internet Assigned Number Authority), IANA managed and allocated the IP addresses to RIRs (Regional Internet Registries) and the RIRs are responsiable to allocate the IP address to the ISPs</em></p>
+<h3>Subnet</h3>
+<p>To make the best use of IP addresses and reduce broadcast traffic, subnets are commonly used. By borrowing bits from the host portion of the address, we can create more subnets with fewer hosts per subnet. This technique is known as subnetting. </p>
+<h3>VLSM (Variable-Lenghth Subnet Mask)</h3>
+<p>Normally, subnets are created with an equal number of hosts, but it can be a waste if fewer hosts are needed. VLSM allows for the creation of subnets with different sizes to accommodate varying numbers of hosts. Based on the existing subnet, VLSM can borrow more bits from the host bits to create variable length subnets.</p>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./Basic-commands-of-cisco-routers-and-switches.html">Basic Commands of Cisco Routers and Switchs </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
