@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Basic Commands of Cisco Routers and Switchs</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="CLI" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Basic Commands of Cisco Routers and Switchs</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-02-22 20:20:00-07:00">Feb 22, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/cli.html"><em>#CLI</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h3>Enter privilege EXEC mode</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch>enable
+        router>enable
+
+    </code>
+</pre>
+<h3>Enter config mode</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch#configure terminal
+        router#configure terminal
+    </code>
+</pre>
+<h3>set up a encrypted password for entering privilege EXEC mode</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch(config)#enable secret [PASSWORD]
+        router(config)#enable secret [PASSWORD]
+    </code>
+</pre>
+<h3>set up a unencrypted password for entering privilege EXEC mode</h3>
+<pre>
+    <code class="language-cisco">
+        switch(config)#enable password [PASSWORD]
+        router(config)#enable password [PASSWORD]
+    </code>
+</pre>
+<h3>set up a password for console line</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch(config)#line console 0
+        switch(config-line)#password PASSWORD
+        switch(config-line)#login
+
+        router(config)# [SMAE WITH SWITCH]
+    </code>
+</pre>
+<h3>set up a password for telnet or SSH</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch(config)#line vty 0 15
+        switch(config-line)#password [PASSWORD]
+        switch(config-line)#login
+
+        router(config)# [SMAE WITH SWITCH]
+    </code>
+</pre>
+<h3>encrypt all the plain passwords</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch(config)#service password-encryption
+        router(config)#service password-encryption
+    </code>
+</pre>
+<h3>set up the name of the router or switch</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch(config)#hostname [NAME]
+        router(config)#hostanme [NAME]
+
+    </code>
+</pre>
+<h3>set up a banner when enter the system</h3>
+<pre>
+    <code class="language-cisco">
+
+
+        switch(config)#banner motd [MESSAGE]
+        router(config)#banner motd [MESSAGE]
+
+    </code>
+</pre>
+<h3>set up ip address for switch for remote control</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch(config)#interface vlan 1
+        switch(config-if)#ip address [IP ADDRESS] [SUBNET MASK]
+        switch(config-if)#no shutdown
+
+    </code>
+</pre>
+<h3>set up default gateway (IP address of router's interface that located in the same local network with switch)</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch(config)#ip default-gateway [IP ADDRESS]
+
+    </code>
+</pre>
+<h3>set up the ip address of interface of router</h3>
+<pre>
+    <code class="language-cisco">
+
+        router(config)#interface [specific interface name]
+        router(config-if)#ip address [IP ADDRESS] [SUBNET MASK]
+        router(config-if)#no shutdown
+
+    </code>
+</pre>
+<h3>show the basic information about the interfaces including ip addresses and status</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch#show ip interface brief
+        router#show ip interface brief
+
+    </code>
+</pre>
+
+<h3>show arp table</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch#show arp
+
+    </code>
+</pre>
+
+<h3>show MAC table</h3>
+<pre>
+    <code class="language-cisco">
+
+        switch#show mac address-table
+
+    </code>
+</pre>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./Ethernet-IPv4-and-IPv6-headers.html">Ethernet, IPv4 and IPv6 headers </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
