@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - IPv6 Addressing</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="IPv6" />
+<meta name="tags" content="Adressing" />
+<meta name="tags" content="cisco" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>IPv6 Addressing</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-02-25 11:20:00-07:00">Feb 25, 2023</time>
+                </li>
+                <li>4 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/ipv6.html"><em>#IPv6</em></a>
+                    <a href="./tag/adressing.html"><em>#Adressing</em></a>
+                    <a href="./tag/cisco.html"><em>#cisco</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>IPv6 addressing</h2>
+<h3>IPv4 and IPv6 coexsitence</h3>
+<ul>
+<li>Methods that help administror to transmit from IPv4 to IPv6.<ol>
+<li>Dual Stack: IPv4 and IPv6 coexist on the same network</li>
+<li>Tunneling: Transport IPv6 packet over IPv4 network by encapsulating the IPv6 packet into IPv4 packet.</li>
+<li>Translation: Like the NAT for IPv4, NAT64 translate the IPv4 packet</li>
+</ol>
+</li>
+</ul>
+<h3>Format</h3>
+<ul>
+<li>128 bits</li>
+<li>represented by 32 hexadecimal digits which seperated by colons every four hexadecimal digits </li>
+<li>the block of four hexadecimal digits called hextet</li>
+</ul>
+<h3>Rules that reduce the digits</h3>
+<ol>
+<li>omit leading zeros in any hextec</li>
+<li>double colon<ul>
+<li>double colon can replace any sigle, contiguous string of one or more 16-bit hextet consisting of all zeros.</li>
+<li>double colon can be used only once with an adress.</li>
+<li>if the address has more than one contiguous string of all zero hextet, the best prectice is to use the double colon on the longest string.</li>
+<li>if length of the strings are equal, the first one shoule use the double colon</li>
+</ul>
+</li>
+</ol>
+<h2>IPv6 address type</h2>
+<ol>
+<li>
+<p><strong>Unicast: Similar as IPv4</strong></p>
+<ul>
+<li>Global Unicast Address, gloablly unique internet routable address, it's similar as the IPv4 public address and can be assigned statically and dynamically.<ul>
+<li>Currently, only GUAs with the first 3 bits are assigned. </li>
+<li>2000::/3</li>
+<li>Composition<ul>
+<li>/48 Global routing prefix</li>
+<li>/16 Subnet ID</li>
+<li>/64 Interface ID
+<em>All 0s address is reserved as subnet-router anycast address and it should be assigned only to routers</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Link-local Address, it's required for every IPv6 device. It's used to communicate with the devices on the same local network, so the router will not forward packets with a link-local address.</p>
+<ul>
+<li>fe80::/10</li>
+<li>if the link-local address is not created manually, the device will create it automatically.<ul>
+<li>Generate the ramdon values </li>
+<li>EUI (Extended Unique Identifier) method <ul>
+<li>Fisrt, split the MAC address into 2 pieces  </li>
+<li>Intsert FFFE in the middle of MAC address</li>
+<li>Flip/Invert the 7th bit </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Loop back address: ::1/128</p>
+</li>
+<li>Unique local address,it's used for communicate within a orgnization or site, it's sililar with the IPv4 private address.<ul>
+<li>fc00::/7</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Multicast: Same as IPv4 : ff00:/8</strong></p>
+<ol>
+<li>Well-Known Multicast Addresses<ul>
+<li>The addresses are assigned which are reserved multipul addresses for predefined gourp of devices.  THe assigned adress is used to reach a group of device that running common protocol or service.</li>
+<li>2 common assigned multicast groups<ul>
+<li>ff02::1 All-nodes multicast gourp. Same as broadcast in IPv4</li>
+<li>ff02::2 All-routers multicast group.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Solicited-node Multicast Addresses</li>
+</ol>
+</li>
+<li>
+<p><strong>Anycast</strong></p>
+<ul>
+<li>Any unicast address can be assigned to multiple devices. A packet sent to an anycast address is routed to the nearest device having that address</li>
+</ul>
+</li>
+</ol>
+<h2>IPv6 GUA (Global Unique Address) Assignment</h2>
+<ul>
+<li>Configure the GUA mannually <ul>
+<li>GUA and LLA can both be specified as default gateway address. But LLA is recommended.</li>
+</ul>
+</li>
+</ul>
+<pre>
+<code class="language-cisco">
+
+        router(config-if)#ipv6 adress 2001:db8::1/64
+
+</code>
+</pre>
+
+<ul>
+<li>Configure the GUA automatically<ul>
+<li>SLAAC (Stateless Adress Autoconfiguration)</li>
+<li>DHCPv6
+<em>when SLAAC or DHCPv6 is used, the LLA of the router is automatically specified as the default gateway address</em></li>
+</ul>
+</li>
+</ul>
+<h2>IPv6 LLA (Link-local Address) Assignment</h2>
+<ul>
+<li>Configure the LLA manually</li>
+</ul>
+<pre>
+<code class="language-cisco">
+
+        router(config-if)#ipv6 address fe80::1 link-local
+
+</code>
+</pre>
+
+<h2>IPv6 GUA Dynamic Addressing</h2>
+<ul>
+<li>The device obtain GUA by ICMPv6 (Internet Contorl Message Protocol Version 6) messgaes.</li>
+<li>The IPv6 routers send out ICMPv6 RA (Router Advertisement) message to all IPv6-enabled devices on the network every 200 seconds.</li>
+<li>A RA message will be also sent in response to a device sending a ICMPv6 RS (Router Solicitation) message, which is a reuqest message for RA.</li>
+</ul>
+<p><em>The router must be enabled for IPv6 routing which is not enabled by default</em></p>
+<pre>
+<code class="language-cisco">
+
+        router(config)#ipv6 unicast-routing
+
+</code>
+</pre>
+
+<h3>The composition of a RA message</h3>
+<ol>
+<li>Network prefix and prefix length - This tells the device which network it belongs to</li>
+<li>Default gateway address - This is a IPv6 LLA, the source address of RA message.</li>
+<li>DNS address and Domain name</li>
+</ol>
+<h4>3 Methods for RA messages</h4>
+<ol>
+<li>SLAAC (Stateless Address Autoconfiguration) - I have everything you needd, prefix, prefix length and default gateway</li>
+<li>SLAAC with a stateless DHCPv6 server - Here is my information, you have to get other information such as DNS address or domian name from the stateless DHCPv6 server.</li>
+<li>Stateful DHCPv6 - I can give you the default gateway, but the other information you need to ask for the stateful DHCPv6 server.</li>
+</ol>
+<h3>The methods of generating Interface ID</h3>
+<ul>
+<li>EUI-64</li>
+<li>Randomly generate 64-bit number</li>
+</ul>
+<p><em>To ensure the uniqueness of the address, the clinet may use Duplicated Address Detection (DAD) process.It's similar to the ARP, if there is no reply, the address is unique.</em> </p>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./IPv4-addressing.html">IPv4 Addressing </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
