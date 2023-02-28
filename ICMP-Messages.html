@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - ICMP Messages</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="ICMP" />
+<meta name="tags" content="ICMPv4" />
+<meta name="tags" content="ICMPv6" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>ICMP Messages</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-02-27 17:40:00-07:00">Feb 27, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/icmp.html"><em>#ICMP</em></a>
+                    <a href="./tag/icmpv4.html"><em>#ICMPv4</em></a>
+                    <a href="./tag/icmpv6.html"><em>#ICMPv6</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>ICMP (Internet Control Message Protocol)</h2>
+<p>TCP/IP suite provide the error and informational messages by the serivce of ICMP. The ICMP messages provide the feedback of the process of IP pakcet in certian conditions. It includes ICMPv4 and ICMPv6</p>
+<ul>
+<li>ICMPv4 The message protocol</li>
+<li>ICMPv6 The same with ICMPv4 but has addtional functionality</li>
+</ul>
+<h3>Types of Messages</h3>
+<ul>
+<li>
+<p>Host Reachability
+ICMP echo message is used to test the reachablity of a host on a network. The host send a ICMP echo request message to another one, if the destination host is reachable, then it will response with a IMCP echo reply message. The use of this is basis of Ping unititly.</p>
+</li>
+<li>
+<p>Host or Service Unreachable
+When a device receives a pakcet that can not be delivered, it will send a ICMP Destination Unreachable message to notify the source that the destination or service is unreachable. The codes in the messsage indicate why it can't be delivered.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>ICMPv4 Code</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Net unreachable</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Host unreachable</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Protocol unreachable</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Port unreachable</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ICMPv6 Code</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>No route to destination</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Communication with the destination is administritively prohibited</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Beyond scope of the source address</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Address unreachable</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Port unreachable</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Time Exceeded
+If the router receives a packet in which the value of the TTL(Time to Live) decremented to 0, it will discard the packet and send a ICMPv4 time exceeded message to the source.
+ICMPv6 is the same with ICMPv4,As oppsed to the TTL value, the factor that determined to discard the pakcet is the vlaue in Hop Limit field.</li>
+</ul>
+<p><em>ICMP Time Exceeded messages are used by traceroute tool.</em></p>
+<h3>ICMPv6 Message</h3>
+<p>ICMPv6 has new features and imporoved functionality which ICMPv4 doesn't have.</p>
+<ul>
+<li>
+<p>Messaging between IPv6 routers and IPv6-enabled devices for allacating ip address</p>
+<ul>
+<li>Router Solicitation (RS) messages</li>
+<li>Router Advertisement(RA) messages</li>
+</ul>
+</li>
+<li>
+<p>Messageing between IPv6 devices for duplicate address detection and address resolution.</p>
+<ul>
+<li>Neighbor Solicitation (NS) messages</li>
+<li>Neighbor Advertisement (NA) messages</li>
+</ul>
+</li>
+</ul>
+<h3>Ping</h3>
+<ul>
+<li>
+<p>Ping is an IPv4 and IPv6 testing utility that uses ICMP echo reuqest and echo reply messages to test the connectivity between hosts.</p>
+</li>
+<li>
+<p>Using ping followed a detination address, a ICMP echo request message will be sent to the detination, once the request message has been received by the detination host, a ICMP reply message will be sent back to the source. Ping provides the feedback that indicate the time consumed from the request messages was sent until the reply message was sent back to the source.</p>
+</li>
+<li>
+<p>Ping also has a timeout value for reply.  If a message is not received within the timeout, ping provide a message that indicate the response was not received.</p>
+</li>
+</ul>
+<h3>Traceroute</h3>
+<p>Traceroute(Tracert) is an utility that generates a list of hops that were successfully reached along the path. </p>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./IPv6-addressing.html">IPv6 Addressing </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
