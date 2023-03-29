@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Transport layer - TCP and UDP</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Transport Layer" />
+<meta name="tags" content="TCP" />
+<meta name="tags" content="UDP" />
+<meta name="tags" content="Cisco" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Transport layer - TCP and UDP</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-03-29 13:20:00-06:00">Mar 29, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/transport-layer.html"><em>#Transport Layer</em></a>
+                    <a href="./tag/tcp.html"><em>#TCP</em></a>
+                    <a href="./tag/udp.html"><em>#UDP</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>Transport layer protocols</h2>
+<p>The transport layer protocols determine how to transfer the messages between hosts and be responsible for the reliability of conversation. The transport layer protocols include TCP and UDP.</p>
+<h3>TCP</h3>
+<h4>The process of TCP</h4>
+<ul>
+<li>Establishes a Session</li>
+<li>Ensures reliable delivery</li>
+<li>Provides same-order delivery</li>
+<li>Support flow control</li>
+</ul>
+<h4>TCP initiation - 3-way handshake</h4>
+<ul>
+<li>Client -&gt; (SYN [sequence number]) Server</li>
+<li>Server -&gt; (SYN-ACK [Acknowledge number= Last sequence number+1] [sequence number]) Client</li>
+<li>Client -&gt; (ACK [sequence number] [Acknowledge number= Last sequence number+1])</li>
+</ul>
+<h4>TCP termination - 4-way handshake</h4>
+<ul>
+<li>Sender -&gt; (FIN) Receiver </li>
+<li>Receiver -&gt; (ACK) Sender</li>
+<li>Receiver -&gt;(FIN) Sender</li>
+<li>Sender -&gt; (ACK) Receiver</li>
+</ul>
+<h4>The header of TCP</h4>
+<table>
+<thead>
+<tr>
+<th>16 bits</th>
+<th>16 bits</th>
+<th>32 bits</th>
+<th>32 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source Port</td>
+<td>Destination Port</td>
+<td>Sequence Number</td>
+<td>Acknowledgement Number</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>4 bits</th>
+<th>6 bits</th>
+<th>6 bits</th>
+<th>16 bits</th>
+<th>16 bits</th>
+<th>16 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Header Length</td>
+<td>Reserved</td>
+<td>Control Bits</td>
+<td>Window</td>
+<td>Checksum</td>
+<td>Urgent</td>
+</tr>
+</tbody>
+</table>
+<h3>UDP</h3>
+<h4>The characteristics of UDP</h4>
+<ul>
+<li>Data is reconstructed in the order that it is received.</li>
+<li>Any segments that are lost are not resent.</li>
+<li>There is no session establishment.</li>
+<li>The sending is not informed about resource availability.</li>
+</ul>
+<h4>The header of UDP</h4>
+<table>
+<thead>
+<tr>
+<th>16 bits</th>
+<th>16 bits</th>
+<th>16 bits</th>
+<th>16 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source Port</td>
+<td>Destination Port</td>
+<td>Length</td>
+<td>Checksum</td>
+</tr>
+</tbody>
+</table>
+<h4>Ports Group</h4>
+<ul>
+<li>Well-Known Ports 0 - 1023</li>
+<li>Registered Ports 1024 - 49151</li>
+<li>Private Dynamic Ports 49,152 - 65535</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Port Number</th>
+<th>Protocol</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>TCP</td>
+<td>FTP data</td>
+</tr>
+<tr>
+<td>21</td>
+<td>TCP</td>
+<td>FTP control</td>
+</tr>
+<tr>
+<td>22</td>
+<td>TCP</td>
+<td>SSH</td>
+</tr>
+<tr>
+<td>23</td>
+<td>TCP</td>
+<td>Telnet</td>
+</tr>
+<tr>
+<td>25</td>
+<td>TCP</td>
+<td>SMTP</td>
+</tr>
+<tr>
+<td>53</td>
+<td>UDP,TCP</td>
+<td>DNS</td>
+</tr>
+<tr>
+<td>67</td>
+<td>UDP</td>
+<td>DHCP Server</td>
+</tr>
+<tr>
+<td>68</td>
+<td>UDP</td>
+<td>DHCP Client</td>
+</tr>
+<tr>
+<td>69</td>
+<td>UDP</td>
+<td>TFTP</td>
+</tr>
+<tr>
+<td>80</td>
+<td>TCP</td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>110</td>
+<td>TCP</td>
+<td>POP3</td>
+</tr>
+<tr>
+<td>143</td>
+<td>TCP</td>
+<td>IMAP</td>
+</tr>
+<tr>
+<td>161</td>
+<td>UDP</td>
+<td>SNMP</td>
+</tr>
+<tr>
+<td>443</td>
+<td>TCP</td>
+<td>HTTPS</td>
+</tr>
+</tbody>
+</table>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./subnetting.html">How to do subnetting </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
