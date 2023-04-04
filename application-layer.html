@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Application layer of TCP/IP model</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="TCP/IP" />
+<meta name="tags" content="application layer" />
+<meta name="tags" content="cisco" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Application layer of TCP/IP model</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-04-04 10:20:00-06:00">Apr 04, 2023</time>
+                </li>
+                <li>1 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/tcpip.html"><em>#TCP/IP</em></a>
+                    <a href="./tag/application-layer.html"><em>#application layer</em></a>
+                    <a href="./tag/cisco.html"><em>#cisco</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>Application Layer</h2>
+<table>
+  <tr>
+   <th>OSI model</th>
+   <th>TCP/IP model</th>
+  </tr>
+
+  <tr>
+    <td>Application</td>
+    <td rowspan="3">Application</td>
+  </tr>
+  <tr>
+    <td>Presentation</td>
+  </tr>
+  <tr>
+      <td>Session</td>
+  </tr>
+</table>
+
+<h3>Famous application layer protocols</h3>
+<ul>
+<li>HTTP(Hypertext Transfer Protocol)</li>
+<li>FTP(File Transfer Protocol)</li>
+<li>TFTP(Trivial File Transfer Protocol)</li>
+<li>IMAP(Internet Message Access Protocol)</li>
+<li>DNS(Domain Name System)</li>
+</ul>
+<h2>Presentation Layer</h2>
+<h3>Functions</h3>
+<ul>
+<li>Format the data into a compatible format</li>
+<li>Compress the data</li>
+<li>Encrypt the data </li>
+</ul>
+<h3>Famous format</h3>
+<ul>
+<li>MKV(Matroska Video)</li>
+<li>MPG(Motion Picture Experts Group)</li>
+<li>MOV(QuickTime Video)</li>
+<li>GIF(Graphics Interchange Format)</li>
+<li>JPG(Joint Photographic Experts Group)</li>
+<li>PNG(Portable Network Graphics)</li>
+</ul>
+<h2>Session Layer</h2>
+<ul>
+<li>Create and maintain dialogs between source and destination applications.</li>
+</ul>
+<h3>Email protocols</h3>
+<h4>SMTP (Simple Mail Transfer Protocol)</h4>
+<ul>
+<li>Send the mail to the server</li>
+<li>Server port 25</li>
+</ul>
+<h4>POP3 (Post Office Protocol)</h4>
+<ul>
+<li>Retrieve mail from the server</li>
+<li>Server Passively listen port 110</li>
+<li>Not store mail on the server</li>
+</ul>
+<h4>IMAP (Internet Message Access Protocol)</h4>
+<ul>
+<li>Retrieve mail from the server</li>
+<li>Server Passively listen port 143</li>
+<li>Leave a copy on the server</li>
+</ul>
+<h3>DNS (Domain Name System)</h3>
+<h4>Types of resource record</h4>
+<ul>
+<li>A - An end device IPv4 address</li>
+<li>NS - AN authoritative name server</li>
+<li>AAAA - AN end device IPv6 address</li>
+<li>MX - A mail exchange record</li>
+</ul>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./TCP-UDP.html">Transport layer - TCP and UDP </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
