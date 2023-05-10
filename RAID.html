@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - RAID - Redundant Array of Independent Disks</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="virtualization" />
+<meta name="tags" content="RAID" />
+<meta name="tags" content="Hard Drive" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a href="./category/network.html"> Network </a></li>
+                    <li><a                         class="active" href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>RAID - Redundant Array of Independent Disks</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-05-10 11:20:00-06:00">May 10, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/virtualization-fundamentals.html"><em>Virtualization Fundamentals</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/virtualization.html"><em>#virtualization</em></a>
+                    <a href="./tag/raid.html"><em>#RAID</em></a>
+                    <a href="./tag/hard-drive.html"><em>#Hard Drive</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>RAID (Redundant Array of Independent Disks)</h2>
+<ul>
+<li>RAID 0 - Distribute the data across the disks, no redundancy</li>
+<li>RAID 1 - Mirror the data on the other disk, tolerate one disk failure</li>
+<li>RAID 3 - Stripe the data across the disks at the byte level with a dedicated disk that store the parity information for all disks</li>
+<li>RAID 4 - Similar to RAID 3 but stripe the data at the block level</li>
+<li>RAID 5 - Stripe the data and parity information at block level across the disks</li>
+<li>RAID 6 - Similar to RAID 5 but has 2 sets of parity information distributed across the disks</li>
+<li>RAID 10 - Combine RAID 0 and RAID 1</li>
+</ul>
+<p><em>Block level : blocks of 512 bytes or larger</em></p>
+<p><em>Stripe : smallest addressable piece of data</em></p>
+<p><em>Stripe width : number of disks in the array</em></p>
+<h3>Parity</h3>
+<p>Parity is the information that used to detect the error and recover the data</p>
+<ul>
+<li>The bit value is determined by the number of 1's in the data blocks at the same position</li>
+<li>When the number of 1's is odd, the bit value should be 1. Otherwise 0.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block1</td>
+<td>1001 1110</td>
+</tr>
+<tr>
+<td>Block2</td>
+<td>0111 0010</td>
+</tr>
+<tr>
+<td>Block3</td>
+<td>1100 1001</td>
+</tr>
+<tr>
+<td>Parity</td>
+<td>0010 0101</td>
+</tr>
+</tbody>
+</table>
+<h3>Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>RAID</th>
+<th>Min Disks</th>
+<th>Storage Efficiency</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2</td>
+<td>100%</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>50%</td>
+<td>High</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>(n-1)/n</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3</td>
+<td>(n-1)/n</td>
+<td>moderate</td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>(n-2)/n</td>
+<td>Moderate but more than RAID5</td>
+</tr>
+<tr>
+<td>10/01</td>
+<td>4</td>
+<td>50%</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<h3>Benefits of RAID</h3>
+<ul>
+<li>Increase capacity</li>
+<li>Higher availability</li>
+<li>Increase performance
+<em>It's not a substitution of backup</em></li>
+</ul>
+<h3>MTBF (Mean Time Between Failure)</h3>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./application-layer.html">Application layer of TCP/IP model </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
