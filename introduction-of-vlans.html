@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Introduction of VLANs</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="Vlans" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Introduction of VLANs</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-05-29 17:20:00-06:00">May 29, 2023</time>
+                </li>
+                <li>3 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/vlans.html"><em>#Vlans</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>Vlans (Virtual LANs)</h2>
+<p>Logical networks that segmented by some factors like function, team or application, without regard for physical location of users or devices. </p>
+<h3>Benefits of Vlans</h3>
+<ol>
+<li>Smaller broadcast domains</li>
+<li>Improved security </li>
+<li>only users in the same vlan can communicate each other.</li>
+<li>Improved IT efficiency </li>
+<li>Simplify the management since the users with similar network requirements can be configured on the same vlan</li>
+<li>vlans can be named to make them easier to identify.</li>
+<li>Reduced cost</li>
+<li>Best performance </li>
+<li>Smaller broadcast domain reduce the unnecessary traffic </li>
+<li>Simpler project and application management</li>
+</ol>
+<h3>Types of VLAN</h3>
+<ul>
+<li>Default VLAN<ul>
+<li>All ports are assigned to VLAN 1 by default</li>
+<li>The native VLAN is VLAN 1 by default</li>
+<li>The management VLAN is VLAN 1 by default</li>
+<li>VLAN 1 can not be renamed to deleted</li>
+</ul>
+</li>
+<li>Data VLAN</li>
+<li>Native VLAN<ul>
+<li>802.1Q Trunk port places untagged traffic on native VLAN</li>
+<li>It is a best practice to configure the native VLAN as an unused VLAN.</li>
+</ul>
+</li>
+<li>Management VLAN<ul>
+<li>A data VLAN that configured specifically for network management traffic including SSH, Telnet, HTTPS, HTTP and SNMP.</li>
+</ul>
+</li>
+<li>Voice VLAN<ul>
+<li>A separate VLAN that support Voice over IP (VoIP)</li>
+</ul>
+</li>
+</ul>
+<h3>VLAN trunks</h3>
+<ul>
+<li>A trunk is a point-to-point link between 2 networks devices that carries more than 1 VLAN.</li>
+</ul>
+<h3>VLAN Tag</h3>
+<ul>
+<li>Insert into between the field of Source MAC address and Type/Length in a frame header</li>
+<li>Type: 2-byte value called the tag protocol ID (TPID). For Ethernet, the value is 0x8100</li>
+<li>User priority : level or service implementation</li>
+<li>Canonical Format Identifier (CFI) : enables Token Ring frames to be carried across Ethernet links.</li>
+<li>VLAN ID (VID) : VLAN identification number that supports up to 4096 VLANS IDs.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>16 bits</th>
+<th>3 bits</th>
+<th>1 bit</th>
+<th>12 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>User Priority</td>
+<td>CFI</td>
+<td>VLAN ID (VID)</td>
+</tr>
+</tbody>
+</table>
+<h3>802.1Q Tagging</h3>
+<p>The management frame typically will not be tagged and the trunk ports of switch will send untagged frame to <strong>Native VLAN</strong>.</p>
+<p>If an 802.1Q trunk port receives a tagged frame with the VLAN ID that is the same as the native VLAN, it drops the frame.</p>
+<h3>VLAN Range</h3>
+<ul>
+<li>Normal VLANs 1-1005<ul>
+<li>1002-1005 are reserved for legacy network technologies</li>
+<li>1 and 1002-1005 are automatically created and can not be removed</li>
+<li>Configurations are stored in the switch flash memory in a VLAN database file called vlan.dat</li>
+<li>When configured, VLAN trunking protocol (VTP) helps synchronize the VLAN database between switches.</li>
+</ul>
+</li>
+<li>Extended VLANs 1006-4094<ul>
+<li>Configurations are stored in the running configuration by default.</li>
+<li>Support fewer features than normal range VLANs</li>
+<li>Requires VTP transparent mode configuration to support extended rang VLANs</li>
+</ul>
+</li>
+</ul>
+<h3>Access port</h3>
+<ul>
+<li>One access port can only associated with one data VLAN and voice VLAN.</li>
+</ul>
+<p><em>switchport access vlan number : forces the creation of VLAN</em></p>
+<h3>Trunk port</h3>
+<ul>
+<li>commands</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+(config)# switchport mode trunk
+(config)# switchport trunk native vlan vlan-id
+(config)# switchport trunk allowed vlan vlan-list
+
+    </code>
+</pre>
+
+<h2>DTP (Dynamic Trunking Protocol)</h2>
+<ul>
+<li>Default DTP configuration is <em>Dynamic Auto</em></li>
+<li>Disable the DTP on a device that does not support DTP</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+(config)# switchport mode trunk
+(config)# switchport nonegotiate
+
+    </code>
+</pre>
+
+<ul>
+<li>Re-enable the DTP </li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+(config)# switchport mode dynamic auto
+
+    </code>
+</pre>
+
+<h3>Negotiate Interface Mode</h3>
+<ul>
+<li>Dynamic Auto</li>
+<li>Dynamic Desirable</li>
+<li>Trunk</li>
+<li>Access</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Dynamic Auto</th>
+<th>Dynamic Desirable</th>
+<th>Trunk</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dynamic Auto</td>
+<td>Access</td>
+<td>Trunk</td>
+<td>Trunk</td>
+<td>Access</td>
+</tr>
+<tr>
+<td>Dynamic Desirable</td>
+<td>Trunk</td>
+<td>Trunk</td>
+<td>Trunk</td>
+<td>Access</td>
+</tr>
+<tr>
+<td>Trunk</td>
+<td>Trunk</td>
+<td>Trunk</td>
+<td>Trunk</td>
+<td>Limited connectivity</td>
+</tr>
+<tr>
+<td>Access</td>
+<td>Access</td>
+<td>Access</td>
+<td>Limited Connectivity</td>
+<td>Access</td>
+</tr>
+</tbody>
+</table>
+<p><em>Best practice is to set the interface to Trunk and nonegotiate when a trunk link is required. when trunking is not intended, DTP should be turned off</em></p>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./RAID.html">RAID - Redundant Array of Independent Disks </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
