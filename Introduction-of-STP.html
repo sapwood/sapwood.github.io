@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Introduction of STP</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="STP" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Introduction of STP</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-06-12 12:20:00-06:00">Jun 12, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/stp.html"><em>#STP</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>STP (Spanning Tree Protocol)</h2>
+<p>Consequences without STP </p>
+<ul>
+<li>Broadcast storm</li>
+<li>Overwritten MAC tables make them unstable </li>
+<li>Multiple same frames will be received by the device</li>
+</ul>
+<h3>Election of root bridge</h3>
+<ul>
+<li>Root bridge is determined by the Bridge ID</li>
+<li>All the switches send Bridge ID information (BPDU Bridge Protocol Data Unit) to the other ones. The switches will compare the Bridge ID that received with their own Bridge ID.</li>
+<li>The switch which has lowest Bridge ID is elected to be the root bridge</li>
+<li>Bridge ID = Bridge Priority + Extended System ID + MAC address</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Bridge ID</th>
+<th>4 bits</th>
+<th>8 bits</th>
+<th>48 bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>Bridge Priority</td>
+<td>Extended System ID</td>
+<td>MAC address</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Default priority value of cisco switches is 32768, the range is 0 to 61440 in increments of 4096</li>
+<li>The extended system ID is a decimal value that added to the bridge priority to identify the vlan for this BPDU. (Different vlans may have different root bridge)</li>
+</ul>
+<h3>Root port determination</h3>
+<ul>
+<li>The port has the lower cost to the root bridge</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>10 Mbps</th>
+<th>100 Mbps</th>
+<th>1 Gbps</th>
+<th>10 Gbps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path Cost</td>
+<td>100</td>
+<td>19</td>
+<td>4</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p><em>if ports have same path cost to the root bridge, the port connects to the neighbor switch who has the lower Bridge ID is determined to be root port</em></p>
+<h3>Elect designated ports</h3>
+<ul>
+<li>All ports on the root bridge are designated ports</li>
+<li>If one end of the a segment is root port, then the other end is a designated port.</li>
+<li>The port has the lower path cost to the root bridge is elected to be designated port in a segment which neither of ports are root ports.</li>
+</ul>
+<h3>Elect alternate (Blocked) port</h3>
+<ul>
+<li>if the port is not a root or designated port, it becomes a alternate (blocked) port.</li>
+<li>it will not forward the Ethernet frame</li>
+</ul>
+<h3>STP timers</h3>
+<ul>
+<li>Hello Timer : default 2 seconds, can be modified between 1 and 10 seconds.</li>
+<li>Forward delay timer : Forward delay is the time that is spent in the listening and learning state. Default is 15 seconds. Can be modified between 4 and 30 seconds.</li>
+<li>Max Age timer : Max age is the maximum time that a switch waits before attempting to change the STP topology. Default is 20 seconds, can be modified between 6 and 40 seconds.</li>
+</ul>
+<h3>Port states</h3>
+<ul>
+<li>Blocking : Max Age = 20 seconds</li>
+<li>Listening : Forward delay = 15 seconds</li>
+<li>Learning : Forward delay = 15 seconds</li>
+<li>Forwarding</li>
+</ul>
+<h2>RSTP</h2>
+<h3>Port state</h3>
+<table>
+  <tr>
+   <th>STP</th>
+   <th>RSTP</th>
+  </tr>
+
+  <tr>
+    <td>Disabled</td>
+    <td rowspan="3">Discarding</td>
+  </tr>
+  <tr>
+    <td>Blocking</td>
+  </tr>
+  <tr>
+      <td>Listening</td>
+  </tr>
+   <tr>
+      <td>Learning</td>
+      <td>Learning</td>
+  </tr>
+   <tr>
+      <td>Forwarding</td>
+      <td>Forwarding</td>
+  </tr>
+</table>
+
+<hr>
+
+<table>
+  <tr>
+   <th>STP</th>
+   <th>RSTP</th>
+  </tr>
+
+  <tr>
+    <td>Root</td>
+    <td>Root</td>
+
+  </tr>
+  <tr>
+    <td>Designated</td>
+    <td>Designated</td>
+  </tr>
+  <tr>
+      <td rowspan="2">Blocked</td>
+      <td>Backup</td>
+  </tr>
+   <tr>
+      <td>Alternate</td>
+
+  </tr>
+
+</table>
+
+<h3>Portfast</h3>
+<ul>
+<li>when a port is configured with portfast, it will transit from blocking to forwarding immediately bypassing the listening and learning state.</li>
+<li>Only for the ports that connect to the end devices.</li>
+</ul>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./introduction-of-vlans.html">Introduction of VLANs </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
