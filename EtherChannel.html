@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - EtherChannel protocols and configurations</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="TCP/IP" />
+<meta name="tags" content="EtherChannel" />
+<meta name="tags" content="cisco" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>EtherChannel protocols and configurations</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-06-22 20:20:00-06:00">Jun 22, 2023</time>
+                </li>
+                <li>1 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/tcpip.html"><em>#TCP/IP</em></a>
+                    <a href="./tag/etherchannel.html"><em>#EtherChannel</em></a>
+                    <a href="./tag/cisco.html"><em>#cisco</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>EtherChannel</h2>
+<ul>
+<li>Implementation restrictions<ul>
+<li>Interface types can not be mixed. (Fast Ethernet and Gigabit Ethernet)</li>
+<li>Maximum interfaces in one logic link = 8 active physical interfaces = 16 physical interfaces</li>
+<li>Maximum logic links = 6 logic links on one switch </li>
+<li>The configuration of the both side physical ports should be the same.</li>
+</ul>
+</li>
+</ul>
+<h3>AutoNegotiation Protocols</h3>
+<h4>PAgp (Port Aggregation Protocol) [Cisco proprietary]</h4>
+<ul>
+<li>Mode<ul>
+<li>On (No negotiate, the EtherChannel will be formed until the other side's mode is On as well)</li>
+<li>Desirable (active negotiation)</li>
+<li>Auto (passive negotiation)</li>
+</ul>
+</li>
+</ul>
+<h4>LACP (Link Aggregation Control Protocol) [IEEE]</h4>
+<ul>
+<li>Mode<ul>
+<li>On (No negotiate, the EtherChannel will be formed until the other side's mode is On as well)</li>
+<li>LACP Active (active negotiation)</li>
+<li>LACP Passive (passive negotiation)</li>
+</ul>
+</li>
+</ul>
+<h4>Configuration</h4>
+<pre>
+  <code class="language-cisco">
+
+(config)# interface port-channel 1
+(config)# interface range f0/1-2
+(config-if)# channel-group 1 mode [LACP or PAgP mode]
+
+  </code>
+</pre>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./Introduction-of-STP.html">Introduction of STP </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
