@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Introductions of DHCPv4</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="DHCPv4" />
+<meta name="tags" content="ISO" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Introductions of DHCPv4</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-06-25 14:20:00-06:00">Jun 25, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/dhcpv4.html"><em>#DHCPv4</em></a>
+                    <a href="./tag/iso.html"><em>#ISO</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>DHCPv4 (Dynamic Host Configuration Protocol version 4)</h2>
+<h3>Steps to obtain a lease (<em>DORA</em>)</h3>
+<ol>
+<li>Discover<ul>
+<li>Broadcast with client's MAC address to find the DHCP server</li>
+</ul>
+</li>
+<li>Offer<ul>
+<li>When the server receives the Discover message, it reserves an available IP address for the requesting client.</li>
+<li>Create an entry consisting of the MAC address of requesting client and the lease IP address.</li>
+<li>Send offer message to the client</li>
+</ul>
+</li>
+<li>Request<ul>
+<li>When the client receives the Offer message, it will broadcast Request message which contains the acceptance of the specific DHCP server.</li>
+</ul>
+</li>
+<li>Acknowledge<ul>
+<li>On receiving the DHCPREQUEST message, it will send a ICMP ping message to the address that will assign to the client to ensure it is not used. </li>
+<li>It will create a new ARP entry.</li>
+<li>Reply with a DHCPACK message which is same as the DHCPOFFER message except the message type filed.</li>
+<li>When the client got the DHCPACK message, it will perform an ARP lookup for the assigned address, if no response, the client knows it's valid and starts using it.</li>
+</ul>
+</li>
+</ol>
+<h3>Steps to renew a lease</h3>
+<ol>
+<li>DHCP Request (DHCPREQUEST)<ul>
+<li>Before the lease expires, the client sends a DHCPQEQUEST message directly to the DCHP server that originally offered IP address.</li>
+</ul>
+</li>
+<li>DHCP Acknowledgement (DCHPACK)<ul>
+<li>If the server receives the DHCPREQUEST message, it will send a DHCPACK message with the lease information.</li>
+<li>If the server does not receive the DHCPREQUEST message in a specific amount of time, the client will send a DHCPREQUEST broadcast message to lookup the other DCHP server.</li>
+</ul>
+</li>
+</ol>
+<h3>Configuration of DHCP on Cisco IOS</h3>
+<ul>
+<li>Exclude IP address</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+    (config)# ip dhcp excluded-address [low address] [high address]
+
+    </code>
+</pre>
+
+<ul>
+<li>Define a DCHP Pool Name</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+    (config)# ip dhcp pool [pool name]
+
+    </code>
+</pre>
+
+<ul>
+<li>Configure the pool</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+    (config)# network [network address] [netmask address]
+    (config)# default-router [router address]
+    (config)# dns-server [dns server address]
+    (config)# domain-name [domain name]
+
+    </code>
+</pre>
+
+<p><em>Disable Cisco IOS DHCP service</em></p>
+<pre>
+    <code class="language-cisco">
+
+    (config)# no service dhcp
+
+    </code>
+</pre>
+
+<h3>DHCP Relay</h3>
+<ul>
+<li>configure the default router as the router does not forward the broadcast message</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+    R1(config)# interface g0/0/0
+    R1(config-if)# ip helper-address [DHCP server's IP address]
+    R1(config-if)# end
+
+    </code>
+</pre>
+
+<h3>Configure router as a DHCP client</h3>
+<pre>
+    <code class="language-cisco">
+
+        R1(config)# interface g0/0/0
+        R1(config-if)# ip address dhcp
+        R1(config-if)# no shutdown
+
+    </code>
+</pre>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./EtherChannel.html">EtherChannel protocols and configurations </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
