@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - COnfiguration of DHCPv6</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="DHCPv6" />
+<meta name="tags" content="SLAAC" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>COnfiguration of DHCPv6</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-06-26 16:20:00-06:00">Jun 26, 2023</time>
+                </li>
+                <li>4 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/dhcpv6.html"><em>#DHCPv6</em></a>
+                    <a href="./tag/slaac.html"><em>#SLAAC</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>DHCPv6 (Dynamic Host Configuration version 6) and SLAAC (Stateless Address Auto Configuration)</h2>
+<ul>
+<li>The host will use 1 of the 3 methods defined by the ICMPv6 RA(Router Advertisement) message received on the interface to obtain the IPv6 address automatically.</li>
+<li>The Link Local address will be created automatically when the host boots and the interface is active.</li>
+<li><em>Sometime there is %number appended the link local address. This is known as a Zone ID or Scope ID. It is used by the OS to associate the Link local address with a specific interface.</em> </li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+    fe80::fb:1d54:839f:f595%21
+
+    </code>
+</pre>
+
+<h3>Dynamic IPv6 GUA Assignment</h3>
+<ul>
+<li>Stateless <ul>
+<li>SLAAC only (ALl information is provided by RA message)</li>
+<li>SLAAC and Stateless DHCPv6 server (RA message provides the IPv6 configuration information and additional information is provided by Stateless DHCPv6 server)</li>
+</ul>
+</li>
+<li>Stateful<ul>
+<li>Stateful DHCPv6 server (Hosts obtain IPv6 address information from a stateful DHCPv6 server and the RA message only provide the default gateway information)</li>
+</ul>
+</li>
+<li><em>Although the hosts follow the suggestion of RA message, but the actual decision is ultimately up to the host.</em></li>
+</ul>
+<h3>3 RA Message Flags</h3>
+<ul>
+<li>A flag (Address Auto Configuration.  SLAAC)</li>
+<li>O flag (Other Configuration. Stateless DHCPv6 Server)</li>
+<li>M flag (Managed Address Configuration. Stateful DCHPv6 Server)</li>
+</ul>
+<h4>RA Flags combination</h4>
+<ul>
+<li>A flag=1 , O flag=0 , M flag=0  (SLAAC only)</li>
+<li>A flag=1 , O flag=1 , M flag=0  (SLAAC and Stateless DHCPv6 Server)</li>
+<li>A flag=0 , M flag=1  (Stateful DHCPv6 Server only)</li>
+</ul>
+<h3>SLAAC</h3>
+<ul>
+<li>To enable the sending of RA message, a router must join the IPv6 all-routers group (FF02::2) using the command</li>
+</ul>
+<pre>
+    <code class="language-cisco">
+
+    R1(config)# ipv6 unicast-routing
+
+    </code>
+</pre>
+<ul>
+<li>An IPv6-enabled router sends RA messages to the IPv6 all-nodes multicast address FF02::1 every 200 seconds.</li>
+<li>SLAAC method is enabled by default.<ul>
+<li>The client can use EUI-64 (Extended Unique Identifier) method to generate the 64 bits interface ID</li>
+<li>Generate the 64 bits interface ID randomly. </li>
+<li>The default gateway is the source address of the RA message</li>
+</ul>
+</li>
+</ul>
+<h4>RS message</h4>
+<ul>
+<li>when a client is configured to obtain the address information automatically, it sends an RS message to the IPv6 all-routers multicast address of FF02::2</li>
+</ul>
+<h3>DAD (Duplicated Address Detection)</h3>
+<ul>
+<li>The host sends an ICMPv6 NS (Neighbor Solicitation) message with a solicited-node multicast address. This address duplicates the last 24 bits of IPv6 address of the host.</li>
+<li>If no other devices respond with a NA (Neighbor Advertisement) message, then the address is unique and can be used.</li>
+<li>If there is a NA message received, the host has to determine a new interface ID to use.</li>
+</ul>
+<h3>DHCPv6 Operation Steps</h3>
+<ol>
+<li>Host sends an RS (Router Solicitation) message (FF02::2 to all IPv6-enabled routers)</li>
+<li>Router responds with an RA (Router Advertisement) message</li>
+<li>Host sends a DHCPv6 SOLICIT message (FF02::1:2 reserved IPv6 multicast All-DHCPv6-Servers address. This address has link-local scope which means routers do not forward the messages to other networks.)</li>
+<li>DHCPv6 server responds with an ADVERTISE unicast message to inform client that server is available for service.</li>
+<li>Host responds to DHCPv6 Server<ul>
+<li>Stateless DHCPv6 client<ul>
+<li>The client creates the IPv6 address using the prefix in the RA message and a self-generated Interface ID.</li>
+<li>The client sends a DHCPv6 INFORMATION-REQUEST message to the DHCPv6 server requesting additional configuration (e.g.,DNS)</li>
+</ul>
+</li>
+<li>Stateful DHCPv6 client<ul>
+<li>The client sends a DHCPv6 REQUEST message to the DHCPv6 server to obtain all IPv6 configuration.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DHCPv6 Server sends a unicast REPLY message</li>
+</ol>
+<h3>Stateless DHCPv6 Operation</h3>
+<ul>
+<li>The stateless DHCPv6 server is only providing configuration information that is identical for all devices, not IPv6 address.</li>
+</ul>
+<h3>Enable stateless DHCPv6 on an interface</h3>
+<pre>
+    <code class="language-cisco">
+
+    R1(config-if)# ipv6 nd other-config-flag
+    # this command set the flag O=1
+
+    </code>
+</pre>
+
+<h3>Set defalt SLAAC only again</h3>
+<pre>
+    <code class="language-cisco">
+
+    R1(config-if)# no ipv6 nd other-config-flag
+
+    </code>
+</pre>
+
+<h3>Enable Stateful DHCPv6 on an interface</h3>
+<pre>
+    <code class="language-cisco">
+
+    R1(config-if)# ipv6 nd managed-config-flag
+    # this command set the flag M=1
+    R1(config-if)# ipv6 nd prefix default no-autoconfig
+    # this command set the flag A=0
+
+    </code>
+</pre>
+
+<h3>Configure a stateless DHCPv6 server</h3>
+<pre>
+    <code class="language-cisco">
+
+    R1(config)# ipv6 unicast-routing
+    R1(config)# ipv6 dhcp pool IPV6-STATELESS
+    R1(config-if)# ipv6 nd other-config-flag
+    R1(config-if)# ipv6 dhcp server IPV6-STATELESS
+
+    </code>
+</pre>
+<h3>Configure a stateless DHCPv6 Client</h3>
+<pre>
+    <code class="language-cisco">
+
+    R3(config)# ipv6 unicast-routing
+    R3(config-if)# ipv6 enable
+    # create a Link-local address
+    R3(config-if)# ipv6 address autoconfig
+    # use SLAAC
+
+    </code>
+</pre>
+<h3>Configure a stateful DHCPv6 Server</h3>
+<pre>
+    <code class="language-cisco">
+
+    R1(config)# ipv6 unicast-routing
+    R1(config)# ipv6 dhcp pool IPV6-STATEFUL
+    R1(config-dhcpv6)# address prefix 2001:db8:acad:1::/64
+
+    R1(config-if)# ipv6 nd managed-config-flag
+    R1(config-if)# ipv6 nd prefix default no-autoconfig
+    R1(config-if)# ipv6 dhcp server IPV6-STATEFUL
+
+    </code>
+</pre>
+<h3>Configure a stateful DHCPv6 Client</h3>
+<pre>
+    <code class="language-cisco">
+
+    R3(config)# ipv6 unicast-routing
+    R3(config-if)# ipv6 enable
+    R3(config-if)# ipv6 address dhcp
+
+    </code>
+</pre>
+<h3>Configure a DHCPv6 relay agent</h3>
+<pre>
+    <code class="language-cisco">
+
+    R1(config-if)# ipv6 dhcp relay destination 2001:db8:acad:1::2 G0/0/0
+
+    </code>
+</pre>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./Introductions-of-DHCPv4.html">Introductions of DHCPv4 </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
