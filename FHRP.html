@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - FHRP(First Hop Redundantcy Protocol)</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="FHRP" />
+<meta name="tags" content="HSRP" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                    <li><a href="https://github.com/sapwood"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>FHRP(First Hop Redundantcy Protocol)</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-07-03 12:20:00-06:00">Jul 03, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/fhrp.html"><em>#FHRP</em></a>
+                    <a href="./tag/hsrp.html"><em>#HSRP</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>FHRP (First Hop Redundancy Protocols)</h2>
+<ul>
+<li>Implement router redundancy, multiple routers are configured to work together to present the illusion of a single router.</li>
+<li>By sharing an IP address and a MAC address, two or more routers can act as a single virtual router.</li>
+<li>The ability of a network to dynamically recover from the failure of a device acting as a default gateway is known as first hop redundancy</li>
+</ul>
+<h3>Steps for Router Failover(The ability to switch automatically and seamlessly to a reliable backup system)</h3>
+<ol>
+<li>The standby router stops seeing Hello message from the forwarding router.</li>
+<li>The standby router assumes the role of the forwarding router.</li>
+</ol>
+<h3>HSRP (Hot Standby Router Protocols) [Cisco proprietary]</h3>
+<ul>
+<li>The router with the highest priority will become the active router.<ul>
+<li>
+<p>The default priority is 100, it can be changed using '''standby priority''' command 
+<pre>
+    <code class="language-cisco"></p>
+<p>R1(config-if)# standby priority</p>
+<p></code>
+    </pre>
+    + The range of the HSRP priority is 0 - 255
+- The router with numerically highest IPv4 address is elected as the active router.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3>HSRP Preemption</h3>
+<ul>
+<li>By default, after a router becomes the active router, it will remain the active router even if there is another router which has higher priority comes online.</li>
+<li>To enable the re-election of the active router, using '''standby preempt''' command can force the process of the re-election when there is a new router comes online with a higher priority.</li>
+</ul>
+<pre>
+        <code class="language-cisco">
+
+            R1(config-if)# standby preempt
+
+        </code>
+</pre>
+<ul>
+<li>Only one router can be the active router. A router has the same priority bu higher IPv4 address will not preempt the role of active router.</li>
+</ul>
+<h3>HSRP States and Timers</h3>
+<table>
+<thead>
+<tr>
+<th>HSRP State</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initial</td>
+<td>An interface first becomes available</td>
+</tr>
+<tr>
+<td>Learn</td>
+<td>The router waits to hear from the active router</td>
+</tr>
+<tr>
+<td>Listen</td>
+<td>The router knows the virtual IP address, listens fro hello message from active router or standby router</td>
+</tr>
+<tr>
+<td>Speak</td>
+<td>The router sends periodic hello message and actively participate the election of active or standby router</td>
+</tr>
+<tr>
+<td>Standby</td>
+<td>The router is a candidate to become the next active router and sends periodic hello message.</td>
+</tr>
+<tr>
+<td>Active</td>
+<td>The router won the election</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The active and standby HSRP routers send hello message to the HSRP group multicast address every 3 seconds by default.</li>
+<li>The standby router will become the active router, if it doesn't receive a hello message from the active router after 10 seconds.</li>
+</ul>
+<h3>GLBP(Gateway Loading balancing protocol)[Cisco proprietary]</h3>
+<ul>
+<li>It provides support for IPv6</li>
+<li>It provides one virtual IP address and multiple MAC addresses</li>
+<li>It support load balancing where multiple active routers can share the traffic load at a single time</li>
+</ul>
+<h3>HSRP Configuration</h3>
+<pre>
+    <code class="language-cisco">
+
+        R1(config-if)# standby version 2
+        R1(config-if)# standby [group number] ip [virtual default gateway address]
+        R1(config-if)# standby [group number] priority [priority number 0-255]
+        R1(config-if)# standby [group number] preempt
+
+    </code>
+</pre>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./DHCPv6-SLAAC.html">COnfiguration of DHCPv6 </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
