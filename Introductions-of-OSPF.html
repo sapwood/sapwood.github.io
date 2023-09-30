@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Introductions of OSPF</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="OSPF" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                    <li><a href="https://github.com/sapwood"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Introductions of OSPF</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-09-30 14:20:00-06:00">Sep 30, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/ospf.html"><em>#OSPF</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>OSPF</h2>
+<ul>
+<li>OSPFv3 is used for IPv6 networks.</li>
+<li>OSPF is a link state routing protocol</li>
+<li>A link is an interface on a router</li>
+<li>Link-state information includes the network prefix, prefix length and cost</li>
+</ul>
+<h3>Components of OSPF</h3>
+<ul>
+<li>Routing Protocol Messages<ul>
+<li>Hello packet</li>
+<li>Database description packet</li>
+<li>Link-state request packet</li>
+<li>Link-state update packet</li>
+<li>Link-state acknowledgment packet</li>
+</ul>
+</li>
+<li>Data structures<ul>
+<li>Adjacency Database (This creates the neighbor table)<ul>
+<li><code>show ip ospf neighbor</code></li>
+</ul>
+</li>
+<li>Link-state Database(LSDB)(This creates the topology table)<ul>
+<li>All routers within an area have identical LSDB.</li>
+<li>List information about all other routers in the network.</li>
+<li><code>show ip ospf database</code></li>
+</ul>
+</li>
+<li>Forwarding Database(This creates the routing table)<ul>
+<li>The routing table is unique.</li>
+<li><code>show ip route</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Algorithm <ul>
+<li>Dijkstra shortest-path first (SPF) algorithm</li>
+</ul>
+</li>
+</ul>
+<h3>Link-state operation</h3>
+<ol>
+<li>Establish neighbor adjacency (Hello Packet)</li>
+<li>Exchange Link-state advertisement (LSAs)<ul>
+<li>LSAs contain the state and cost of each directly connected link</li>
+<li>Flood the LSAs to adjacent neighbors until all the routers in the area have all the LSAs</li>
+</ul>
+</li>
+<li>Build the link state database<ul>
+<li>Based on the received the LSAs</li>
+</ul>
+</li>
+<li>Execute the SPF algorithm</li>
+<li>Choose the best route</li>
+</ol>
+<h3>Single-area and Multi-area OSPF</h3>
+<ul>
+<li>Single-area OSPF <ul>
+<li>All routers are in one area.</li>
+<li>Best practice is to use area 0</li>
+</ul>
+</li>
+<li>Multi-area OSPF<ul>
+<li>In a hierarchical way</li>
+<li>All areas must connect to the backbone area (area 0)</li>
+<li>Routers interconnecting the areas are referred to as Area Border Routers(ABR)</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h3>Advantage of Multi-area OSPF</h3>
+<ul>
+<li>Smaller routing tables<ul>
+<li>Fewer routing table entries</li>
+<li>Network addresses can be summarized between areas. (Route summarization is not enabled by default)</li>
+<li>Reduced link-state update overhead</li>
+<li>Reduced frequency of SPF calculations</li>
+</ul>
+</li>
+</ul>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./FHRP.html">FHRP(First Hop Redundantcy Protocol) </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
