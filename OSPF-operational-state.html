@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - OSPF operational state</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="Switch" />
+<meta name="tags" content="Routers" />
+<meta name="tags" content="OSPF" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                    <li><a href="https://github.com/sapwood"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>OSPF operational state</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-10-02 09:20:00-06:00">Oct 02, 2023</time>
+                </li>
+                <li>2 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/switch.html"><em>#Switch</em></a>
+                    <a href="./tag/routers.html"><em>#Routers</em></a>
+                    <a href="./tag/ospf.html"><em>#OSPF</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h3>OSPF operational state</h3>
+<ol>
+<li>Down state<ul>
+<li>No hello packets received</li>
+<li>Router sends hello packets</li>
+<li>Transition to init state</li>
+</ul>
+</li>
+<li>Init state<ul>
+<li>Hello packets are received from the neighbor</li>
+<li>They contain the router ID of the sending router</li>
+<li>Transition to Two-Way state</li>
+</ul>
+</li>
+<li>Two-Way State<ul>
+<li>Communication between 2 routers is bidirectional</li>
+<li>The router elect DR and BDR</li>
+<li>Transition to ExStart state</li>
+</ul>
+</li>
+<li>ExStart state<ul>
+<li>On the point-to-point networks, the two routers decide which router will initiate DBD packet exchange and decide upon the initial DBD packet sequence number</li>
+<li>The router with higher router ID will be the first router to send DBD packets</li>
+</ul>
+</li>
+<li>ExChange state<ul>
+<li>Routers exchange DBD packets</li>
+<li>Routers send LSDB information, when the DBD packets are received, it will send LSAck packet to acknowledge.</li>
+<li>The router use the sequence number to determine the newness of the received link-state information</li>
+<li>if additional router information is required <ul>
+<li>Transition to Loading state</li>
+<li>Otherwise, Transition to the FUll state</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Loading state<ul>
+<li>LSRs and LSUs are used to gain additional route information</li>
+<li>LSUs are sent only to neighbors in the conditions:<ul>
+<li>when a change is perceived (incremental updates)</li>
+<li>every 30 minutes</li>
+</ul>
+</li>
+<li>Routes are processed using the SPF algorithm</li>
+<li>Transition to Full state</li>
+</ul>
+</li>
+<li>Full state<ul>
+<li>The link-state database of the router is fully synchronized</li>
+</ul>
+</li>
+</ol>
+<h3>Establish Neighbor Adjacency</h3>
+<ul>
+<li>The hello packets are sent to All OSPF Routers IPv4 multicast address (224.0.0.5)</li>
+<li>The hello packets contain the Router ID </li>
+<li>Only OSPFv2 routers will process these packets</li>
+<li>Router ID is a 32-bit number formatted like an IPv4 address</li>
+</ul>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./Introductions-of-OSPF.html">Introductions of OSPF </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
