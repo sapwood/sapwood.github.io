@@ -164,6 +164,50 @@
 </ul>
 </li>
 </ul>
+<h3>Link-state Packets</h3>
+<ul>
+<li>Link-state packets are the tools used by OSPF to help determine the fastest available route for a packet.<ul>
+<li>Type 1: Hello Packet <ul>
+<li>This is used to establish and maintain adjacency with other OSPF routers.</li>
+</ul>
+</li>
+<li>Type 2: Database Description (DBD) Packet<ul>
+<li>This contains an abbreviated list of the LSDB of the sending router</li>
+<li>It is used by the receiving routers to check again the local LSDB</li>
+<li>The LSDB must be identical on all link-state routers within an area</li>
+</ul>
+</li>
+<li>Type 3: Link-State Request (LSR) Packet<ul>
+<li>The receiving router can request more information about any entry in the DBD by sending an LSR</li>
+</ul>
+</li>
+<li>Type 4: Link-state Update (LSU) packet<ul>
+<li>This is used to reply to LSRs </li>
+<li>LSUs contain several different types of LSAs</li>
+</ul>
+</li>
+<li>Type 5: Link-State Acknowledgment (LSAck) Packet<ul>
+<li>When an LSU is received, the router sends an LSAAck to confirm receipt of the LSU.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>LSU (link-state update)</h3>
+<ul>
+<li>LSU contains one or more LSAs</li>
+<li>LSA Type<ol>
+<li>Router LSAs</li>
+<li>Network LSAs</li>
+<li>Summary LSAs</li>
+<li>Summary LSAs</li>
+<li>Autonomous System External LSAs</li>
+<li>Multicast OSPF LSAs</li>
+<li>Defined for Not-SO-Stubby Areas</li>
+<li>External Attributes LSA for Border Gateway Patrol (BGPs)</li>
+</ol>
+</li>
+</ul>
     </article>
     <section class="post-nav">
         <div id="left-page">
