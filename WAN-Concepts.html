@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Brian's Blog - Single area OSPF configuration</title>
+        <title>Brian's Blog - WAN Concepts</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
@@ -15,9 +15,7 @@
 
 <meta name="tags" content="Network" />
 <meta name="tags" content="Cisco" />
-<meta name="tags" content="Switch" />
-<meta name="tags" content="Routers" />
-<meta name="tags" content="OSPF" />
+<meta name="tags" content="WAN" />
 </head>
 <body>
 <script type="text/javascript" src="prism.js"></script>
@@ -62,12 +60,12 @@
     </nav>
 <main>
     <article>
-        <h1>Single area OSPF configuration</h1>
+        <h1>WAN Concepts</h1>
         
         <aside>
             <ul>
                 <li>
-                    <time datetime="2023-10-02 14:20:00-06:00">Oct 02, 2023</time>
+                    <time datetime="2023-11-26 14:20:00-07:00">Nov 26, 2023</time>
                 </li>
                 <li>2 min read</li>
                 <li>
@@ -78,73 +76,81 @@
                     Tags:
                     <a href="./tag/network.html"><em>#Network</em></a>
                     <a href="./tag/cisco.html"><em>#Cisco</em></a>
-                    <a href="./tag/switch.html"><em>#Switch</em></a>
-                    <a href="./tag/routers.html"><em>#Routers</em></a>
-                    <a href="./tag/ospf.html"><em>#OSPF</em></a>
+                    <a href="./tag/wan.html"><em>#WAN</em></a>
                 </li>
             </ul>
         </aside>
-        <h2>Single-area OSPFv2 configuration</h2>
-<h3>Configuration</h3>
+        <h2>WAN</h2>
+<h3>WAN Topology</h3>
 <ul>
-<li><code>router ospf process-id</code></li>
-<li>The process-id value represents a number between 1 and 65,535</li>
-<li>The process-id is locally significant, it does not have to the same on the other routers</li>
-<li>But it is best practice to use the same process-id on all OSPF routers</li>
+<li>Point-to-Point Topology</li>
+<li>Hub-and-Spoke Topology</li>
+<li>Dual-Homed Topology</li>
+<li>Fully Meshed Topology</li>
+<li>Partially Meshed Topology</li>
 </ul>
-<h3>Router-IDs</h3>
+<h3>Modern WAN standards recognized authorities</h3>
 <ul>
-<li>An OSPF router ID is a 32-bit value, represented as IPv4 address.</li>
-<li>The router ID is used to uniquely identify an OSPF router.</li>
-<li>All OSPF packets include the router ID of the originating router.</li>
-<li>The router ID can be defined by administrator or automatically assigned by the router</li>
-<li>The router ID is used by an OSPF-enabled router <ul>
-<li>Participate in the synchronization of OSPF databases<ul>
-<li>During the ExChange State, the router with the highest router ID will send the database decriptor(DBD) packet first</li>
+<li>TIA/EIA Telecommunications Industry Association and Electronic Industries Alliance</li>
+<li>ISO  International Organization for Standardization</li>
+<li>IEEE  Institute of Electrical and Electronic Engineers</li>
 </ul>
-</li>
-<li>Participate in the election of the designated router(DR)<ul>
-<li>The router with the highest router ID is elected the DR</li>
-<li>The router with the second router ID is elected the BDR</li>
+<h3>Serial Transmit / Parallel Transmit</h3>
+<ul>
+<li>Parallel Transmit faster but it is prone to synchronization problems</li>
+<li>Due to the synchronization problems there is a distance limited 8 meters at most for copper cables</li>
+<li>Parallel connections are viable in data center</li>
 </ul>
-</li>
+<h3>Optical fiber protocols</h3>
+<ul>
+<li>SDH Synchronous Digital Hierarchy - global standard for transporting data over fiber-optic cable</li>
+<li>SONET Synchronous Optical Networking - North American Standard that provides the same service as SDH</li>
 </ul>
-</li>
+<h3>Digital capacity of copper media</h3>
+<ul>
+<li>T-Carrier - Used in north America T1 : 1.544 Mbps, T3 : 43.7 Mbps</li>
+<li>E-Carrier - Used in Europe T1 :2.048 Mbps, T3 : 34.368 Mbps</li>
 </ul>
-<h3>Router-ID Determination</h3>
+<h3>Traditional WAN Technology</h3>
 <ol>
-<li><code>OSPF router-id rid</code> (This is the recommended method to assign a router ID)</li>
-<li>If the router ID is not configured, the router chooses the highest IPv4 address of any configured loopback interface.</li>
-<li>If no loopback interfaces are configured, the router chooses the highest active IPv4 address of any of its physical interfaces.</li>
+<li>Circuit-Switched Connections</li>
+<li>PSTN (Public Service Telephone Network) - Rate of signal less than 56 kbps</li>
+<li>ISDN (Integrated Services Digital Network) - rate of signal from 45 kbps to 2.048 Mbps</li>
+<li>Packet-Switched Connections</li>
+<li>Frame Relay</li>
+<li>ATM Asynchronous Transfer Mode</li>
 </ol>
-<h3>Modify Router ID</h3>
+<h3>Modern WAN Technology</h3>
 <ul>
-<li>After a router selects a router ID, an active OSPF router does not allow the router ID to be changed until the router is reloaded or the OSPF process is reset.</li>
-<li>Rest the OSPF process <code>clear ip ospf process</code></li>
+<li>Dedicated Broadband </li>
+<li>Packet-Switched </li>
+<li>MPLS (Multi-protocol Label Switching) Enables the WAN providers to carry any protocol as payload data</li>
+<li>Internet-based Broadband</li>
 </ul>
-<h3><strong><em>Configure OSPF directly on the interface</em></strong></h3>
+<h3>Ethernet WAN</h3>
 <ul>
-<li><code>routers(config-if)# ip ospf process-id area area-id</code></li>
+<li>Metropolitan Ethernet (Metro E)</li>
+<li>Ethernet over MPLS (EoMPLS)</li>
+<li>Virtual Private LAN Service (VPLS)</li>
 </ul>
-<h3>Passive Interface</h3>
+<h3>ISP Connectivity Options</h3>
 <ul>
-<li>To prevent the transmission of routing messages through a router interface</li>
-<li><code>passive-interface interface</code></li>
+<li>Single-homed</li>
+<li>Dual-homed</li>
+<li>Multi-homed</li>
+<li>Dual-multihomed</li>
 </ul>
-<p><strong><em>Change the network type</em></strong>
-- <code>router(config-if)# ip ospf network point-to-point/ broadcast</code>
-- In the point-to-point network, the election of DR and BDR is not conducted.</p>
     </article>
     <section class="post-nav">
         <div id="left-page">
             <div id="left-link">
                 <div id="left-arrow"><i class="fa fa-chevron-circle-left"></i></div>
-                <a href="./WAN-Concepts.html"> WAN Concepts</a>
+                <a href="./VPN-IPsec-Concepts.html"> VPN and IPsec Concepts</a>
             </div>
         </div>
         <div id="right-page">
             <div id="right-link">
-                <a href="./OSPF-operational-state.html">OSPF operational state </a>
+                <a href="./Single-Area-OSPF-Configuration.html">Single area OSPF configuration </a>
                 <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
             </div>
         </div>
