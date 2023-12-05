@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Brian's Blog - Basic Concepts of QoS</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda"/>
+        <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="prism.css">
+
+
+<meta name="tags" content="Network" />
+<meta name="tags" content="Cisco" />
+<meta name="tags" content="QoS" />
+</head>
+<body>
+<script type="text/javascript" src="prism.js"></script>
+<style>.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+@keyframes octocat-wave {
+    0%, 100% {
+        transform: rotate(0)
+    }
+    20%, 60% {
+        transform: rotate(-25deg)
+    }
+    40%, 80% {
+        transform: rotate(10deg)
+    }
+}
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
+}</style><div id="container">
+    <header>
+        <h1><a href="./">Brian's Blog</a></h1>
+            <ul class="social-media">
+                    <li><a href="https://www.linkedin.com/in/brianxiabingzhang/"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                    <li><a href="https://github.com/sapwood"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a></li>
+            </ul>
+        <p><em>Adventures in IT and Life: Bits, Bytes and Beyond.</em></p>
+    </header>
+    <nav>
+        <ul>
+                    <li><a                         class="active" href="./category/network.html"> Network </a></li>
+                    <li><a href="./category/virtualization-fundamentals.html"> Virtualization Fundamentals </a></li>
+                    <li><a href="./pages/about.html">About me</a>
+                    </li>
+        </ul>
+    </nav>
+<main>
+    <article>
+        <h1>Basic Concepts of QoS</h1>
+        
+        <aside>
+            <ul>
+                <li>
+                    <time datetime="2023-12-04 22:20:00-07:00">Dec 04, 2023</time>
+                </li>
+                <li>3 min read</li>
+                <li>
+                    Categories:
+                    <a href="./category/network.html"><em>Network</em></a>
+                </li>
+                <li>
+                    Tags:
+                    <a href="./tag/network.html"><em>#Network</em></a>
+                    <a href="./tag/cisco.html"><em>#Cisco</em></a>
+                    <a href="./tag/qos.html"><em>#QoS</em></a>
+                </li>
+            </ul>
+        </aside>
+        <h2>QoS Concepts</h2>
+<ul>
+<li>Delay</li>
+<li>Fixed Delay</li>
+<li>Variable Delay</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Delay</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code Delay</td>
+<td>Fixed Delay, amount of time it takes to compress data at source before transmitting to the first internetworking device usually a switch</td>
+</tr>
+<tr>
+<td>Packetization Delay</td>
+<td>Fixed Delay, the time it tasks to encapsulate a packet with all the necessary header information</td>
+</tr>
+<tr>
+<td>Queuing Delay</td>
+<td>Variable Delay, the time a frame or packet waiting to be transmitted on the link</td>
+</tr>
+<tr>
+<td>Serialization Delay</td>
+<td>Fixed Delay, the time it takes to transmit a frame onto the wire</td>
+</tr>
+<tr>
+<td>Propagation Delay</td>
+<td>Variable Delay, the time it takes for the frame to travel between the source and destination</td>
+</tr>
+<tr>
+<td>De-jitter Delay</td>
+<td>Fixed Delay, the time it takes to buffer a flow of packets and then send them out in evenly spaced intervals</td>
+</tr>
+</tbody>
+</table>
+<h2>Voice</h2>
+<ul>
+<li>Predictable</li>
+<li>200 bytes every 20 ms</li>
+<li>RTP port range 16384 to 32767 to prioritize the voice traffic</li>
+<li>Latency should be no more than 150 milliseconds(ms)</li>
+<li>Jitter should be no more than 30 ms</li>
+<li>voice packet loss should be no more than 1%</li>
+<li>Voice traffic requires at least 30 Kbps of bandwidth</li>
+</ul>
+<h2>Video</h2>
+<ul>
+<li>Not predictable</li>
+<li>every 33 ms</li>
+<li>UDP port 554 Real-Time Streaming Protocol (RTSP)</li>
+<li>Latency should be no more than 400 milliseconds</li>
+<li>Jitter should be no more than 50 ms</li>
+<li>video packet loss should be no more than 1%</li>
+<li>Video traffic requires at least 384 Kbps of bandwidth</li>
+</ul>
+<h2>Queuing algorithm</h2>
+<h3>FIFO (First in First out)</h3>
+<ul>
+<li>when no other queuing strategies are configured, all interfaces use FIFO by default</li>
+<li>except serial interface at E1 (2.048 Mbps) and below</li>
+<li>Serial interface at E1 (2.048 Mbps) and below use WFQ by default</li>
+</ul>
+<h3>Weighted Fair Queuing (WFQ)</h3>
+<ul>
+<li>automated scheduling method</li>
+<li>provides fair bandwidth allocation to all network traffic</li>
+<li>classifies traffic into different flows based on packet header addressing</li>
+<li>not supported with tunneling and encryption</li>
+</ul>
+<h3>Class-Based Weighted Fair Queuing (CBWFQ)</h3>
+<ul>
+<li>define traffic classes based on match criteria including protocols, access control lists (ACLs), and input interfaces</li>
+<li>A FIFO queue is reserved for each class</li>
+</ul>
+<h3>Low Latency Queuing (LLQ)</h3>
+<ul>
+<li>brings strict priority queuing (PQ) to CBWFQ</li>
+<li>Strict PQ allows delay-sensitive packets such as voice to be sent before packets in other queues</li>
+</ul>
+<h2>QoS Policy Model</h2>
+<ul>
+<li>Best-effort model</li>
+<li>
+<p>use this when QoS is not required</p>
+</li>
+<li>
+<p>Integrated Services (IntServ)</p>
+</li>
+<li>Provides very high QoS to IP packets with guaranteed delivery</li>
+<li>
+<p>It can severely limit the scalability of a network</p>
+</li>
+<li>
+<p>Differentiated service (DiffServ)</p>
+</li>
+<li>provides high scalability and flexibility in implementing QoS</li>
+<li>Network devices recognize traffic classes and provide different levels of QoS to different traffic classes</li>
+</ul>
+<h2>QoS tools</h2>
+<ul>
+<li>Classification and marking tools</li>
+<li>Congestion and avoidance tools</li>
+<li>Congestion management tools</li>
+</ul>
+<h2>DSCP Values</h2>
+<ul>
+<li>Best Effort (BE)</li>
+<li>Value is 0</li>
+<li>Default for all IP packets</li>
+<li>when experience congestion, packets will be dropped</li>
+<li>Expedited Forwarding (EF)</li>
+<li>Value 46</li>
+<li>First 3 bits map to layer 2 CoS value 5</li>
+<li>used for voice traffic</li>
+<li>Assured Forwarding (AF)</li>
+<li>use the 5 most significant DSCP bits to indicate queues and drop preference</li>
+<li>class 4 is the best queue, class 1 is the worst queue</li>
+<li>first 3 digits indicate the class</li>
+<li>Low drop, medium drop, high drop </li>
+</ul>
+<h2>Class Selector Bits</h2>
+<ul>
+<li>the first 3 bits of DSCP that indicate the class</li>
+<li>These 3 bits map directly to the 3 bits of the CoS field and the IPP field</li>
+</ul>
+<h2>QoS Policy Guidelines</h2>
+<ul>
+<li>Enable queuing at every device in the path between source and destination.</li>
+<li>Classify and mark traffic as close the source as possible.</li>
+<li>Shape and police traffic flows as close to their sources as possible.</li>
+</ul>
+    </article>
+    <section class="post-nav">
+        <div id="left-page">
+            <div id="left-link">
+            </div>
+        </div>
+        <div id="right-page">
+            <div id="right-link">
+                <a href="./VPN-IPsec-Concepts.html">VPN and IPsec Concepts </a>
+                <div id="right-arrow"><i class="fa fa-chevron-circle-right"></i></div>
+            </div>
+        </div>
+    </section>
+    <div>
+    </div>
+</main>
+    <footer>
+        <h6>
+            Rendered by <a href="http://getpelican.com/">Pelican</a> &nbsp;&bull;&nbsp; Theme by <a
+                href="https://github.com/aleylara/Peli-Kiera">Peli-Kiera</a> &nbsp;&bull;&nbsp; Copyright
+                &copy2023  &nbsp;&#8209;&nbsp; Brian         </h6>
+    </footer>
+</div>
+</body>
+</html>
